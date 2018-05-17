@@ -48,7 +48,7 @@ class FormLabelController extends Controller
                    $label = Language::where([['formhub_id', "=", $formHub->id],['pos', "=", $pos]])->first();
                 }
             }
-            $label->description=$item["value"];
+            $label->description=$item["startvalue"];
             $label->save();
         }
     }
@@ -57,7 +57,7 @@ class FormLabelController extends Controller
     public function saveSelectLabel(Request $request, $language, $formid){
         $data=$request->all();
         Log::debug("Saving a item...");
-        //Log::debug(print_r($data));
+        Log::debug(print_r($data,true));
         $laguageSelect = new \App\Language_select();
         $laguageSelect->formline_id=$formid;
         $laguageSelect->language=$language;
@@ -66,14 +66,14 @@ class FormLabelController extends Controller
         $laguageSelect->save();
     }
     
-    public function showSelectLabel(Request $request,$language, $formid){
+    public function showSelectLabel(Request $request,$language, $formid, $table=null){
         $languageProcessor = new LanguageProcessor();
-        return $languageProcessor->showSelectLabel($language, $formid);
+        return $languageProcessor->showSelectLabel($language, $formid, $table);
     }
     
-    public function showLabel(Request $request,$lang,$formid){
+    public function showLabel(Request $request,$lang,$formid,$table){
         $languageProcessor = new LanguageProcessor();
-        return $languageProcessor->showLabel($lang, $formid);
+        return $languageProcessor->showLabel($lang, $formid,$table);
     }
     
     public function deleteSelectLabel(Request $request, $id){

@@ -70,8 +70,10 @@
             <!--<formhub heading="Select the way the columns should be edited" geturl="api/formlines/componenttype/formhubs" posturl="api/formlines"></formhub>-->
             <!--formhub heading="Create the label for each field" geturl="api/formlines/labels/formhubs" posturl="api/formlines/labels/formhubs"></formhub-->
             <!--selectedit language="no" formid="7"></selectedit-->
-            <!--uform geturl="api/form/formhubs/no"></uform-->
-            <router-link to='/form/api%2Fformhub/api%2Fformhub/Test'>Testing</router-link>
+            <uform geturl="api/form/formhubs/no"></uform>
+            <!--router-link to='/form/api%2Ftablehub/api%2Ftablehub/Select%20table and%20country/0/0'>Start</router-link-->
+           
+            <router-view></router-view>
         </div>
     <script src="{{ asset('js/app.js') }}"></script>
     </body>

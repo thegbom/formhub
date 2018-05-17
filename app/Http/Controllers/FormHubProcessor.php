@@ -20,6 +20,7 @@ use App\Formline;
  */
 class FormHubProcessor {
     
+    public static $SELECT=2;
     public static $DO_NOT_SHOW=6;
 
     public function getTableList() {
@@ -128,6 +129,7 @@ class FormHubProcessor {
     }
 
     public function getFormLines($table) {
+        Log::debug("Table::::::::::::::::::::::".$table);
         $formHub = FormHub::where('table_name', $table)->first();
         //print($table."<br/>");
         //var_dump($formHub);

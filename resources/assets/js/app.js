@@ -26,8 +26,10 @@ Vue.use(VueRouter);
 const Home = { template: '<div>This is Home</div>' };
 const routes = [
     {name:'home',path:'/',component:Home},
-    {name:'tableselect',path:'/form/:geturl/:posturl/:heading', component: require('./components/Form.vue'),props:true},
-    {name:'selectoption',path:'/selectedit/:language/:formid', component: require('./components/SelectEdlitList.vue'),props:true},
+    {name:'step0',path:'/form/:geturl/:posturl/:heading/:step/:table', component: require('./components/Form.vue'),props:true},
+    {name:'step1',path:'/form/:geturl/:posturl/:heading/:step/:table/:language', component: require('./components/Form.vue'),props:true},
+    {name:'step2',path:'/form/:geturl/:posturl/:heading/:step/:table/:language', component: require('./components/Form.vue'),props:true},
+    {name:'selectoption',path:'/selectedit/:language/:formid/:table', component: require('./components/SelectEdlitList.vue'),props:true},
     {name:'newuserform',path:'/uform/:geturl', component : require('./components/UserForm.vue'),props:true},
     {name:'edituserform',path:'/uform/:geturl/:id', component : require('./components/UserForm.vue'),props:true}
 ];

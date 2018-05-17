@@ -35,9 +35,10 @@ Route::get('/formlines/componenttype/{table}', 'FormHubController@generateCompon
 Route::post('/formlines','FormHubController@storeFormLines');
 
 Route::get('/formlines/labels/{table}','FormLabelController@showLabelController');
-Route::get('/formlines/labels/{language}/{formid}','FormLabelController@showLabel');
+Route::get('/formlines/labels/{language}/{formid}/{table}','FormLabelController@showLabel');
 Route::post('/formlines/labels/{table}','FormLabelController@saveLabel');
 
+Route::get('/formlines/select/{language}/{formid}/{table}','FormLabelController@showSelectLabel');
 Route::get('/formlines/select/{language}/{formid}','FormLabelController@showSelectLabel');
 Route::post('/formlines/select/{language}/{formid}','FormLabelController@saveSelectLabel');
 Route::get('/formlines/select/delete/row/{id}','FormLabelController@deleteSelectLabel');

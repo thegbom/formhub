@@ -51,9 +51,11 @@ class FormHubController extends Controller
         $list=$request->all();
         
         foreach($list as $item){
-            Log::debug(print_r($item));
+            Log::debug("Saving formlines:");
+            Log::debug(print_r($item,true));
+            Log::debug(">>>>>");
             $formLine = Formline::find($item["id"]);
-            $formLine->component_type=$item['value'];        
+            $formLine->component_type=$item['startvalue'];        
             $formLine->save();     
             if($formLine->component_type==FormHubProcessor::$DO_NOT_SHOW){
                 Log::debug("Form-id: ".$formLine->id);
@@ -71,20 +73,22 @@ class FormHubController extends Controller
     }
     
     public function storeTableHub(Request $request){
+        Log::debug("Saving TableHub");
         $list=$request->all();
         $formHub = new FormHub();
+        Log::debug("ID: ".print_r($list,true));
         foreach($list as $item){
            // Log::debug(print_r($item,true));
            if($item["id"]==1){
-             $formHub->table_name=$item['value'];
-             $formHub->form_name=$item['value'];
+             $formHub->table_name=$item['startvalue'];
+             $formHub->form_name=$item['startvalue'];
            }else if($item["id"]==2){
-             $formHub->default_language=$item['value'];
+             $formHub->default_language=$item['startvalue'];
            }  
         } 
         $formHub->save();
         $formLine=Formline::where('formhub_id', $formHub->id);
-        Log::debug("ID: ".print_r($formLine));
+        
         if ($formLine!=null && !isset($formLine->id)) {
             $formHubProcessor = new FormHubProcessor();
             $columnList = $formHubProcessor->getColumnList($formHub->table_name);

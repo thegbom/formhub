@@ -21,13 +21,17 @@
                  <button @click="deleteItem(item.id)" class="btn btn-danger btn-xs pull-right">Delete</button>
             </li>
         </ul>
+        <span class="input-group-btn">
+             <button v-on:click="nextField()">Next</button>
+        </span>
     </div>
 </template>
 <script>
     export default {
         props: [
          'language',
-         'formid'
+         'formid',
+         'table'
         ],
         data() {
             return {
@@ -42,30 +46,37 @@
         },
         
         created() {
-            this.fetchItemList();
-            this.fetchItemHeader();
+            this.fetchItemList(this.table,-1);
+            //this.fetchItemHeader();
+            if(this.formid==undefined){
+                 this.formid=this.fid;
+            }
         },
         
         methods: {
-            fetchItemList() {
-                axios.get('api/formlines/select/'+this.language+'/'+this.formid).then((res) => {
-                    this.list = res.data;
+            fetchItemList(table, formid) {
+                console.log('Table: '+this.table+" Formid: "+formid);
+                axios.get('api/formlines/select/'+this.language+'/'+formid+'/'+table).then((res) => {
+                    if(res.data.name !== undefined){
+                        this.list = res.data.list;
+                        this.header = res.data.name;
+                        this.fid = res.data.formid;
+                    }else{
+                        this.$router.push({ name: 'home'});
+                        this.$router.go();
+                    }
                 });
             },
-            fetchItemHeader() {
-                axios.get('api/formlines/labels/'+this.language+'/'+this.formid).then((res) => {
-                    //console.log(res)
-                    this.header = res.data;
-                });
-            },
+
+            
  
             createItem() {
-                axios.post('api/formlines/select/'+this.language+'/'+this.formid, this.item)
+                axios.post('api/formlines/select/'+this.language+'/'+this.fid, this.item)
                     .then((res) => {
                         this.item.descr = '';
                         this.item.value = '';
                         this.edit = false;
-                        this.fetchItemList();
+                        this.fetchItemList("", this.fid);
                     })
                     .catch((err) => console.error(err));
             },
@@ -76,6 +87,17 @@
                         this.fetchItemList()
                     })
                     .catch((err) => console.error(err));
+            },
+            
+            nextField(){
+                this.header='',
+                this.list=[],
+                this.formid=-1;
+                this.fid=-1;
+                this.fetchItemList(this.table,-1);            
+                if(this.formid==undefined){
+                   this.formid=this.fid;
+                }
             },
         }
     }
